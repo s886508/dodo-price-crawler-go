@@ -71,12 +71,15 @@ func retrivePriceDetail(url_ string, station string) *price.PriceInfo {
 
 	details := make([]string, 0)
 	doc.Find(".tx01").Each(func(i int, s *goquery.Selection) {
-		details = append(details, s.Find("p").Text())
+		s.Find("p").Each(func(j int, ss *goquery.Selection) {
+
+			details = append(details, ss.Text())
+		})
 	})
 
 	info := &price.PriceInfo{
 		Station: station,
-		Detail:  strings.Join(details, ";"),
+		Detail:  strings.Join(details, "\n"),
 	}
 	return info
 
