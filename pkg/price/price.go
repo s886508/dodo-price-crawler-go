@@ -4,7 +4,7 @@ import "fmt"
 
 type PriceInfo struct {
 	Station string
-	Detail  string
+	Detail  []string
 }
 
 type PriceInfos []*PriceInfo

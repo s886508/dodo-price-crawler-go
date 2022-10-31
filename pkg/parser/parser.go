@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -69,17 +70,17 @@ func retrivePriceDetail(url_ string, station string) *price.PriceInfo {
 		return nil
 	}
 
+	re := regexp.MustCompile(`\s+`)
 	details := make([]string, 0)
 	doc.Find(".tx01").Each(func(i int, s *goquery.Selection) {
 		s.Find("p").Each(func(j int, ss *goquery.Selection) {
-
-			details = append(details, ss.Text())
+			details = append(details, re.ReplaceAllString(ss.Text(), ""))
 		})
 	})
 
 	info := &price.PriceInfo{
 		Station: station,
-		Detail:  strings.Join(details, "\n"),
+		Detail:  details,
 	}
 	return info
 
