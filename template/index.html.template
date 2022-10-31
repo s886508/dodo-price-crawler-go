@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>Will's Homepage</title>
+<style>
+table, th, td{
+  width: 100%;
+  border: 1px solid;
+  border-collapse: collapse;
+}
+tr:nth-child(even) {background: #b0bcc2}
+tr:nth-child(odd) {background: #FFF}
+</style>
+</head>
+
+<body>
+  {{ range .Items }}
+  <table>
+    <thead>
+      <tr>
+        <th>{{ .Station }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{ range .Detail }}
+        <tr>
+          <td>{{.}}</td>
+        </tr>
+      {{ end }}
+    </tbody>
+  </table>
+  <br>
+  {{ end }}
+</body>
+</html>

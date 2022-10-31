@@ -7,12 +7,14 @@ import (
 
 	"github.com/alexflint/go-arg"
 	"github.com/s886508/dodo-price-crawler-go/pkg/config"
+	"github.com/s886508/dodo-price-crawler-go/pkg/output"
 	"github.com/s886508/dodo-price-crawler-go/pkg/parser"
 	"github.com/s886508/dodo-price-crawler-go/pkg/price"
 )
 
 var args struct {
 	ConfigFile string `default:"configs/config.json"`
+	OutputHtml string `default:"index.html"`
 }
 
 func main() {
@@ -22,6 +24,8 @@ func main() {
 	for page := 1; page <= 3; page++ {
 		prices = append(prices, parser.RetrievePrices(cfg.Url, page, cfg.Stations)...)
 	}
+
+	output.PriceInfoToHtml(prices, args.OutputHtml)
 
 	bytes, err := json.Marshal(prices)
 	if err != nil {
